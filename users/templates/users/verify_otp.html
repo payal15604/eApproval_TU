@@ -1,18 +1,20 @@
 <!-- users/templates/users/verify_otp.html -->
-{% load static %}
+<!-- {% load static %} -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTP Verification</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="./verify_otp.css">
 </head>
 <body>
+    <div class="overlay"></div>
     <div class="container">
-        <h2>Enter OTP</h2>
+        <h2>Two-Factor Authentication</h2>
+        <p>We've sent a one-time passcode to your email. Please enter it below to continue.</p>
         <form method="POST">
-            {% csrf_token %}
+            <!-- {% csrf_token %} -->
             <input type="text" name="otp" placeholder="Enter OTP" required><br>
             <button type="submit">Verify OTP</button>
         </form>
