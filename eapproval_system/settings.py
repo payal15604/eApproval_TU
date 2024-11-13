@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-6z6ewow)d2z#d835qrih_5d%#(iq7&w!aqebc3k^p*)l1!4!35"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
 ]
 
 MIDDLEWARE = [
@@ -73,13 +72,17 @@ TEMPLATES = [
 WSGI_APPLICATION = "eapproval_system.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',  # Keep this as is for pg8000
+        'NAME': 'thapar-login-auth',  # Replace with your actual database name
+        'USER': 'myuser',  # Replace with your actual username
+        'PASSWORD': 'mypassword',  # Replace with your actual password
+        'HOST': 'localhost',  # Replace with your host (usually localhost)
+        'PORT': '5432' # Default PostgreSQL port
+        # 'OPTIONS': {
+        #     'driver': 'pg8000',  # Specify pg8000 as the driver
+        # },
     }
 }
 
@@ -102,6 +105,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Email configuration for development
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ppayal_be22@thapar.edu'  # Your email address
+EMAIL_HOST_PASSWORD = 'aagn qkqd ahxm tefp'  # Your email password or app-specific password if using 2FA
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -115,14 +126,18 @@ USE_I18N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # Or your custom static directory path
-]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_URL = '/static/'
+
+# Add this if you're storing static files outside the app directories (e.g., a `static` folder at the project root)
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+# Media files configuration
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
