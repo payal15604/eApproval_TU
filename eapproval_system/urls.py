@@ -23,8 +23,8 @@ from users import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
-    path('', lambda request: redirect('users:signup')), 
-    path('verify-otp/', views.verify_otp, name='verify_otp'),
-    path('login/', views.user_login, name = 'login2')
+    path('', lambda request: redirect('users:signup')) 
+    #path('verify-otp/', views.verify_otp, name='verify_otp'),
+    #path('login/', views.user_login, name = 'login2')
     #path('requests/', include('requests.urls')),
 ]
