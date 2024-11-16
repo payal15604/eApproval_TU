@@ -1,10 +1,11 @@
+{%load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
-    <link rel="stylesheet" href="./student_dashboard.css">
+    <link rel="stylesheet" href="{% static 'css/student_dashboard.css' %}">
 </head>
 <body>
     <div class="dashboard-container">
@@ -21,7 +22,7 @@
                 <button>Submit NDS</button>
             </div>
             <div class="card">
-                <h3>Letter of Recommendation (LOR)</h3>
+                <h3>LOR Request</h3>
                 <p>Request a letter of recommendation.</p>
                 <button>Request LOR</button>
             </div>
