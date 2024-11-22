@@ -1,3 +1,42 @@
+{% comment %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/student_dashboard.css' %}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Student Dashboard</h1>
+        <div class="card-grid">
+            <div class="card">
+                <h3>NOC Request</h3>
+                <p>Submit and track your NOC requests.</p>
+               
+                    <button>Request NOC</button>
+                </a>
+            </div>
+            <div class="card">
+                <h3>No Due Slip</h3>
+                <p>Submit No Due Slips from your hostel.</p>
+               
+                    <button>Submit NDS</button>
+                </a>
+            </div>
+            <div class="card">
+                <h3>LOR Request</h3>
+                <p>Request a letter of recommendation.</p>
+         
+                    <button>Request LOR</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> {% endcomment %}
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -14,24 +53,21 @@
             <div class="card">
                 <h3>NOC Request</h3>
                 <p>Submit and track your NOC requests.</p>
-                <!-- Link to NOC request page -->
-                <a href="{% url 'noc_request' %}">
+                <a href="{% url 'users:noc_request' %}">
                     <button>Request NOC</button>
                 </a>
             </div>
             <div class="card">
                 <h3>No Due Slip</h3>
                 <p>Submit No Due Slips from your hostel.</p>
-                <!-- Link to No Due Slip page -->
-                <a href="{% url 'no_due_slip' %}">
+                <a href="{% url 'users:no_due_slip' %}">
                     <button>Submit NDS</button>
                 </a>
             </div>
             <div class="card">
                 <h3>LOR Request</h3>
                 <p>Request a letter of recommendation.</p>
-                <!-- Link to LOR request page -->
-                <a href="{% url 'lor_request' %}">
+                <a href="{% url 'users:lor_request' %}">
                     <button>Request LOR</button>
                 </a>
             </div>

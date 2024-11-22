@@ -11,7 +11,11 @@ urlpatterns = [
     path('verify-otp/', views.verify_otp, name='verify_otp'),
     path('forgot_password/', views.forgot_password, name = 'forgot_password'),
     path('dashboard/', views.dashboard, name='dashboard'),
-    path('reset_password/', views.reset_password, name='reset_password')
+    path('reset_password/', views.reset_password, name='reset_password'), 
+    path('dashboard/noc_request/', views.noc_request, name='noc_request'),
+    path('dashboard/no_due_slip/', views.no_due_slip, name='no_due_slip'),
+    path('dashboard/lor_request/', views.lor_request, name='lor_request'),
+    path('dashboard/submit/', views.success_page, name='success_page')
 ]
 
 # Serve media files during development

@@ -1,0 +1,141 @@
+/* Reset and global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling with a proper background image */
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('../images/hostelM.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main container styling */
+.container {
+    width: 90%;
+    max-width: 700px;
+    background: rgba(0, 0, 0, 0.75); /* Transparent dark background */
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* Header section */
+header {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 2px solid #ffffff;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #00bcd4;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: #dddddd;
+}
+
+/* Form container */
+.form-container {
+    padding: 20px 0;
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+input, textarea {
+    font-size: 1rem;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid #00bcd4;
+}
+
+/* Textarea specific styling */
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+/* Submit button */
+.form-actions {
+    text-align: center;
+}
+
+.submit-btn {
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    background: #00bcd4;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 188, 212, 0.5);
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #03a9f4;
+    box-shadow: 0 6px 25px rgba(0, 188, 212, 0.8);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+
+    input, textarea {
+        font-size: 0.9rem;
+    }
+
+    .submit-btn {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+}

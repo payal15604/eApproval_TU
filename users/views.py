@@ -8,7 +8,9 @@ from django.conf import settings
 from django.urls import reverse
 import random
 import string
-from .models import UserProfile
+from .models import UserProfile, NOCRequest,LORRequest, NoDueSlip
+from django.http import HttpResponse
+
 
 def generate_otp():
     """Generate a 6-digit OTP."""
@@ -101,7 +103,7 @@ def user_login(request):
 #         return redirect('users:login')
 
 def dashboard(request):
-    return render(request, 'users/dashboard/student_dashboard.html')
+    return render(request, 'users/dashboard/student_dashboard.html', {'MEDIA_URL': settings.MEDIA_URL})
 
 
 def forgot_password(request):
@@ -170,3 +172,123 @@ def reset_password(request):
             return redirect('users:forgot_password')
 
     return render(request, 'users/reset_password.html')
+
+# Function to submit NOC request
+def noc_request(request):
+    if request.method == 'POST':
+        student_name = request.POST.get('student_name')
+        roll_no = request.POST.get('roll_no')  # Get roll number from form
+        email = request.POST.get('email')  # Assume email is provided in the POST request
+        request_description = request.POST.get('request_description')
+        google_drive_link = request.POST.get('google_drive_link')
+        
+        # Get the UserProfile instance using the email (foreign key)
+        try:
+            user_profile = UserProfile.objects.get(email=email)
+        except UserProfile.DoesNotExist:
+            return HttpResponse("User with this email does not exist.", status=400)
+        
+        # Create and save the NOCRequest
+        noc_request = NOCRequest(
+            student_name=student_name,
+            roll_no=roll_no,  # Save the roll number
+            email=user_profile,  # ForeignKey relation
+            request_description=request_description,
+            google_drive_link=google_drive_link
+        )
+        noc_request.save()
+        
+        return redirect('users:success_page')  # Redirect to a success page (you can customize this)
+
+    return render(request, 'users/dashboard/noc_request.html', {'MEDIA_URL': settings.MEDIA_URL})
+
+# # Function to submit No Due Slip
+# def no_due_slip(request):
+#     if request.method == 'POST':
+#         student_name = request.POST.get('student_name')
+#         roll_no = request.POST.get('roll_no')  # Get roll number from form
+#         email = request.POST.get('email')  # Assume email is provided in the POST request
+#         request_description = request.POST.get('request_description')
+#         google_drive_link = request.POST.get('google_drive_link')
+
+#         # Get the UserProfile instance using the email (foreign key)
+#         try:
+#             user_profile = UserProfile.objects.get(email=email)
+#         except UserProfile.DoesNotExist:
+#             return HttpResponse("User with this email does not exist.", status=400)
+
+#         # Create and save the NoDueSlip
+#         no_due_slip = NoDueSlip(
+#             student_name=student_name,
+#             roll_no=roll_no,  # Save the roll number
+#             email=user_profile,  # ForeignKey relation
+#             request_description=request_description,
+#             google_drive_link=google_drive_link
+#         )
+#         no_due_slip.save()
+
+#         return redirect('users:success_page')  # Redirect to a success page (you can customize this)
+
+#     return render(request, 'users/dashboard/no_due_slip.html', {'MEDIA_URL': settings.MEDIA_URL})
+
+def no_due_slip(request):
+    if request.method == 'POST':
+        # Get data from the form
+        student_name = request.POST.get('student_name')
+        roll_no = request.POST.get('roll_no')
+        email = request.POST.get('email')  # Assuming email is provided in the POST request
+        hostel = request.POST.get('hostel', 'Hostel Name Not Provided')  # Default if not provided
+        room_no = request.POST.get('room_no', 'Room Number Not Provided')  # Default if not provided
+
+        # Get the UserProfile instance using the email (foreign key relation)
+        try:
+            user_profile = UserProfile.objects.get(email=email)
+        except UserProfile.DoesNotExist:
+            return HttpResponse("User with this email does not exist.", status=400)
+
+        # Create and save the NoDueSlip instance
+        no_due_slip = NoDueSlip(
+            student_name=student_name,
+            roll_no=roll_no,  # Save the roll number
+            email=email,  # Storing email directly
+            hostel=hostel,  # Save hostel information
+            room_no=room_no,  # Save room number
+        )
+        no_due_slip.save()
+
+        # Redirect to success page after saving
+        return redirect('users:success_page')  # Redirect to a success page or an appropriate view
+
+    return render(request, 'users/dashboard/no_due_slip.html', {'MEDIA_URL': settings.MEDIA_URL})
+
+# Function to submit LOR request
+def lor_request(request):
+    if request.method == 'POST':
+        student_name = request.POST.get('student_name')
+        roll_no = request.POST.get('roll_no')  # Get roll number from form
+        email = request.POST.get('email')  # Assume email is provided in the POST request
+        request_description = request.POST.get('request_description')
+        google_drive_link = request.POST.get('google_drive_link')
+
+        # Get the UserProfile instance using the email (foreign key)
+        try:
+            user_profile = UserProfile.objects.get(email=email)
+        except UserProfile.DoesNotExist:
+            return HttpResponse("User with this email does not exist.", status=400)
+
+        # Create and save the LORRequest
+        lor_request = LORRequest(
+            student_name=student_name,
+            roll_no=roll_no,  # Save the roll number
+            email=user_profile,  # ForeignKey relation
+            request_description=request_description,
+            google_drive_link=google_drive_link
+        )
+        lor_request.save()
+
+        return redirect('users:success_page')  # Redirect to a success page (you can customize this)
+
+    return render(request, 'users/dashboard/lor_request.html', {'MEDIA_URL': settings.MEDIA_URL})
+
+def success_page(request):
+    return render(request, 'users/dashboard/success_page.html')
