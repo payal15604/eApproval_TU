@@ -1,0 +1,107 @@
+{% comment %} <!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href='{% static "css/admin_dashboard.css"%}'>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Admin Dashboard</h1>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Approval Requests</h3>
+                <p>Review and approve requests from students and societies.</p>
+                <button>Approve Requests</button>
+            </div>
+            <div class="card">
+                <h3>Financial Reports</h3>
+                <p>Generate financial reports and analytics.</p>
+                <button>View Reports</button>
+            </div>
+            <div class="card">
+                <h3>System Monitoring</h3>
+                <p>Monitor system status and performance.</p>
+                <button>View Monitoring</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>  {% endcomment %}
+
+{% comment %} <!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href='{% static "css/admin_dashboard.css" %}'>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Admin Dashboard</h1>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Approval Requests</h3>
+                <p>Review and approve requests from students and societies.</p>
+                <!-- Link to the approval requests page -->
+                <a href="{% url 'admin_portal:approve_request' %}"><button>Approve Requests</button></a>
+            </div>
+            <div class="card">
+                <h3>Financial Reports</h3>
+                <p>Generate financial reports and analytics.</p>
+                <!-- Link to the financial reports page -->
+                <a href="{% url 'admin_portal:financial_reports' %}"><button>View Reports</button></a>
+            </div>
+            <div class="card">
+                <h3>System Monitoring</h3>
+                <p>Monitor system status and performance.</p>
+                <!-- Link to the system monitoring page -->
+                <a href="{% url 'admin_portal:system_monitoring' %}"><button>View Monitoring</button></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+ {% endcomment %}
+
+ <!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href='{% static "css/admin_dashboard.css" %}'>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Admin Dashboard</h1>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Approval Requests</h3>
+                <p>Review and approve requests from students and societies.</p>
+                <!-- Link to the approval requests page -->
+                <a href="{% url 'admin_portal:approve_request' %}"><button>Approve Requests</button></a>
+            </div>
+            <div class="card">
+                <h3>Financial Reports</h3>
+                <p>Generate financial reports and analytics.</p>
+                <!-- Link to the financial reports page -->
+                <button>View Reports</button>
+            </div>
+            <div class="card">
+                <h3>System Monitoring</h3>
+                <p>Monitor system status and performance.</p>
+                <!-- Link to the system monitoring page -->
+                <button>View Monitoring</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

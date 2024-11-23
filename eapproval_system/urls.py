@@ -18,13 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
-from users import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
-    path('', lambda request: redirect('users:signup')) 
-    #path('verify-otp/', views.verify_otp, name='verify_otp'),
-    #path('login/', views.user_login, name = 'login2')
-    #path('requests/', include('requests.urls')),
+    path('', lambda request: redirect('admin_portal:landingpage')), #yaha change kara users:signup ko
+    path('admin_portal/', include('admin_portal.urls'))
 ]

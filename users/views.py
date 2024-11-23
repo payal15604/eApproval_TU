@@ -292,3 +292,6 @@ def lor_request(request):
 
 def success_page(request):
     return render(request, 'users/dashboard/success_page.html')
+
+def track_request(request):
+    return render(request, 'users/dashboard/track_request.html', {'MEDIA_URL': settings.MEDIA_URL})

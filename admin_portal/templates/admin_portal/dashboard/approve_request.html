@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Approvals</title>
+    <link rel="stylesheet" href="{% static 'css/approve_request.css'%}">
+</head>
+<body>
+    <div class="scrollable-container">
+        <header>
+            <h1>Request Approval Dashboard</h1>
+        </header>
+    
+        <div class="request-list">
+            <!-- Dummy Request Card -->
+            <div class="request-card">
+                <div class="card-header">
+                    <h3>Society Event Approval</h3>
+                    <p>Description of the event request from the society for approval.</p>
+                </div>
+                <a href="#" class="view-pdf">View Attached PDF</a>
+    
+                <div class="card-actions">
+                    <textarea placeholder="Enter your approval message here..."></textarea>
+                    <div class="buttons">
+                        <button class="approve-btn">Approve</button>
+                        <button class="decline-btn">Decline</button>
+                    </div>
+                </div>
+            </div>
+            <div class="request-card">
+                <div class="card-header">
+                    <h3>Payal</h3>
+                    <p>Description of the request from the society for approval.</p>
+                </div>
+                <a href="#" class="view-pdf">View Attached PDF</a>
+    
+                <div class="card-actions">
+                    <textarea placeholder="Enter your approval message here..."></textarea>
+                    <div class="buttons">
+                        <button class="approve-btn">Approve</button>
+                        <button class="decline-btn">Decline</button>
+                    </div>
+                </div>
+            </div>
+            <!-- More request cards can be added here -->
+        </div>
+    </div>
+    
+</body>
+</html>
