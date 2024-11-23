@@ -1,0 +1,202 @@
+/* Resetting default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Setting up the body with a background image and centered content */
+body {
+    font-family: 'Arial', sans-serif;
+    background: url('../images/activityspace.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+}
+
+/* Scrollable container with bold, modern styling */
+.scrollable-container {
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh;
+    background: rgba(0, 0, 0, 0.6); /* Dark background with transparency for 3D effect */
+    border-radius: 20px;
+    overflow-y: auto;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transform: perspective(1000px);
+    transition: transform 0.3s ease-in-out;
+}
+
+.scrollable-container:hover {
+    transform: rotateY(10deg); /* Hover effect for 3D depth */
+}
+
+/* Header with bold, futuristic text */
+header {
+    text-align: center;
+    padding: 20px 0;
+    border-bottom: 3px solid #fff;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Request List - cards layout */
+.request-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    overflow-y: auto;
+}
+
+/* Individual Request Cards with 3D effect */
+.request-card {
+    background: #333333;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.request-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.request-card:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.1));
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+}
+
+/* Card Header with bold typography */
+.request-card .card-header {
+    margin-bottom: 15px;
+}
+
+.request-card .card-header h3 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #f1f1f1;
+}
+
+.request-card .card-header p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #bbbbbb;
+}
+
+/* View PDF Link with a bold hover effect */
+.request-card .view-pdf {
+    display: block;
+    text-decoration: none;
+    font-weight: bold;
+    color: #00bcd4;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    padding: 8px 15px;
+    background: #1a1a1a;
+    border-radius: 10px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.request-card .view-pdf:hover {
+    background: #00bcd4;
+    color: #fff;
+}
+
+/* Action Buttons Container */
+.request-card .card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.request-card .card-actions textarea {
+    width: 100%;
+    resize: none;
+    height: 80px;
+    border: 2px solid #00bcd4;
+    border-radius: 15px;
+    padding: 15px;
+    background: #333333;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+}
+
+.request-card .card-actions textarea::placeholder {
+    color: #aaa;
+}
+
+/* Approve/Decline buttons with modern 3D effects */
+.request-card .card-actions button {
+    padding: 12px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.request-card .approve-btn {
+    background-color: #00bcd4;
+    color: white;
+    box-shadow: 0 5px 20px rgba(0, 188, 212, 0.3);
+}
+
+.request-card .approve-btn:hover {
+    background-color: #03a9f4;
+    box-shadow: 0 8px 25px rgba(0, 188, 212, 0.5);
+}
+
+.request-card .decline-btn {
+    background-color: #ff5722;
+    color: white;
+    box-shadow: 0 5px 20px rgba(255, 87, 34, 0.3);
+}
+
+.request-card .decline-btn:hover {
+    background-color: #f44336;
+    box-shadow: 0 8px 25px rgba(255, 87, 34, 0.5);
+}
+
+/* Custom Scrollbar */
+.scrollable-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background: #00bcd4;
+    border-radius: 10px;
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}

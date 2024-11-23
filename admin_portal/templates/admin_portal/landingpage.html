@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="{% static 'css/landingpage.css' %}">
+</head>
+<body>
+    <div class="landing-container">
+        <div class="content">
+            <h1>Welcome to Thapar E-Approval</h1>
+            <p>Your one-stop solution for students, societies, and administration. Choose your path and explore a world of possibilities!</p>
+            <div class="buttons">
+                <a href="{% url 'users:signup'%}" class="btn">Proceed as Student</a>
+                {% comment %} <a href="/society" class="btn">Proceed as Society Representative</a> {% endcomment %}
+                <a href="{% url 'admin_portal:signup'%}" class="btn">Proceed as Admin</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

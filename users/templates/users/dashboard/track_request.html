@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Tracking</title>
+    <link rel="stylesheet" href="{% static 'css/track_request.css' %}">
+</head>
+<body>
+    <div class="tracking-container">
+        <header>
+            <h1>Request Tracking System</h1>
+            <p>Track the status of your requests: NOC, No Due Slip, LOR, and more!</p>
+        </header>
+        
+        <div class="controls">
+            <input type="text" placeholder="Search by request ID or name..." class="search-bar">
+            <select class="filter">
+                <option value="all">All Requests</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+            </select>
+        </div>
+        
+        <div class="request-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Request Type</th>
+                        <th>Name</th>
+                        <th>Submission Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>REQ12345</td>
+                        <td>NOC</td>
+                        <td>John Doe</td>
+                        <td>2024-11-20</td>
+                        <td class="status pending">Pending</td>
+                    </tr>
+                    <tr>
+                        <td>REQ12346</td>
+                        <td>No Dues Slip</td>
+                        <td>Jane Smith</td>
+                        <td>2024-11-18</td>
+                        <td class="status approved">Approved</td>
+                    </tr>
+                    <tr>
+                        <td>REQ12347</td>
+                        <td>LOR</td>
+                        <td>Michael Brown</td>
+                        <td>2024-11-15</td>
+                        <td class="status rejected">Rejected</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
