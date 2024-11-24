@@ -1,11 +1,11 @@
-<!-- {% load static %} -->
+{% comment %} {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="./login.css">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
     <div class="login-container">
@@ -25,10 +25,79 @@
                 <button class="login-button" type="submit">Login</button>
             </form>
             <div class="extra-links">
-                <a href="./forgot-password.html" class="forgot-password">Forgot Password?</a>
-                <a href="./signup.html">Create an Account</a>
+                <a href="{% url 'users:forgot_password' %}" class="forgot-password">Forgot Password?</a>
+                <a href="{% url 'users:signup' %}">Create an Account</a>
             </div>
         </div>
     </div>
+</body>
+</html> {% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="background-overlay"></div> <!-- Semi-transparent overlay to darken the background -->
+
+        <div class="login-box">
+            <h2 class="login-header">Login</h2>
+            
+            <!-- Display messages -->
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="message {{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button class="login-button" type="submit">Login</button>
+            </form>
+            <div class="extra-links">
+                <a href="{% url 'users:forgot_password' %}" class="forgot-password">Forgot Password?</a>
+                <a href="{% url 'users:signup' %}">Create an Account</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add custom styling for messages -->
+    <style>
+        .messages {
+            margin-bottom: 20px;
+        }
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .message.success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .message.error {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
 </body>
 </html>

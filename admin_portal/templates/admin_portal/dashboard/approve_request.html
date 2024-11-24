@@ -1,11 +1,96 @@
-<!DOCTYPE html>
+{% comment %} <!DOCTYPE html>
 {% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Request Approvals</title>
-    <link rel="stylesheet" href="{% static 'css/approve_request.css'%}">
+    <link rel="stylesheet" href="{% static 'css/approve_request.css' %}">
+</head>
+<body>
+    <div class="scrollable-container">
+        <header>
+            <h1>Request Approval Dashboard</h1>
+        </header>
+        {% csrf_token %}
+        <div class="request-list">
+            <!-- NOC Requests -->
+
+            {% for request in noc_requests %}
+            <div class="request-card">
+                <div class="card-header">
+                    <h3>NOC Request</h3>
+                    <p><strong>Student Name:</strong> {{ request.student_name }}</p>
+                    <p><strong>Roll Number:</strong> {{ request.roll_no }}</p>
+                    <p><strong>Email:</strong> {{ request.email }}</p>
+                    <p><strong>Description:</strong> {{ request.request_description }}</p>
+                    <a href="{{ request.google_drive_link }}" class="view-pdf" target="_blank">View Attached Document</a>
+                </div>
+                <div class="card-actions">
+                    <textarea placeholder="Enter your approval message here..."></textarea>
+                    <div class="buttons">
+                        <button class="approve-btn">Approve</button>
+                        <button class="decline-btn">Decline</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- No Due Slips -->
+            {% for slip in no_due_slips %}
+            <div class="request-card">
+                <div class="card-header">
+                    <h3>No Due Slip</h3>
+                    <p><strong>Student Name:</strong> {{ slip.student_name }}</p>
+                    <p><strong>Roll Number:</strong> {{ slip.roll_no }}</p>
+                    <p><strong>Email:</strong> {{ slip.email }}</p>
+                    <p><strong>Hostel:</strong> {{ slip.hostel }}</p>
+                    <p><strong>Room Number:</strong> {{ slip.room_no }}</p>
+                </div>
+                <div class="card-actions">
+                    <textarea placeholder="Enter your approval message here..."></textarea>
+                    <div class="buttons">
+                        <button class="approve-btn">Approve</button>
+                        <button class="decline-btn">Decline</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- LOR Requests -->
+            {% for request in lor_requests %}
+            <div class="request-card">
+                <div class="card-header">
+                    <h3>LOR Request</h3>
+                    <p><strong>Student Name:</strong> {{ request.student_name }}</p>
+                    <p><strong>Roll Number:</strong> {{ request.roll_no }}</p>
+                    <p><strong>Email:</strong> {{ request.email }}</p>
+                    <p><strong>Description:</strong> {{ request.request_description }}</p>
+                    <a href="{{ request.google_drive_link }}" class="view-pdf" target="_blank">View Attached Document</a>
+                </div>
+                <div class="card-actions">
+                    <textarea placeholder="Enter your approval message here..."></textarea>
+                    <div class="buttons">
+                        <button class="approve-btn">Approve</button>
+                        <button class="decline-btn">Decline</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>  {% endcomment %}
+
+{% comment %} <!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Approvals</title>
+    <link rel="stylesheet" href="{% static 'css/approve_request.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="scrollable-container">
@@ -14,40 +99,171 @@
         </header>
     
         <div class="request-list">
-            <!-- Dummy Request Card -->
-            <div class="request-card">
+            {% for request in noc_requests %}
+            <div class="request-card" data-id="{{ request.id }}" data-type="noc">
                 <div class="card-header">
-                    <h3>Society Event Approval</h3>
-                    <p>Description of the event request from the society for approval.</p>
+                    <h3>{{ request.student_name }} ({{ request.roll_no }})</h3>
+                    <p>{{ request.request_description }}</p>
                 </div>
-                <a href="#" class="view-pdf">View Attached PDF</a>
-    
+                <a href="{{ request.google_drive_link }}" class="view-pdf" target="_blank">View Attached PDF</a>
+
                 <div class="card-actions">
                     <textarea placeholder="Enter your approval message here..."></textarea>
                     <div class="buttons">
-                        <button class="approve-btn">Approve</button>
-                        <button class="decline-btn">Decline</button>
+                        <button class="approve-btn" data-action="Approved">Approve</button>
+                        <button class="decline-btn" data-action="Declined">Decline</button>
                     </div>
                 </div>
             </div>
-            <div class="request-card">
-                <div class="card-header">
-                    <h3>Payal</h3>
-                    <p>Description of the request from the society for approval.</p>
-                </div>
-                <a href="#" class="view-pdf">View Attached PDF</a>
-    
-                <div class="card-actions">
-                    <textarea placeholder="Enter your approval message here..."></textarea>
-                    <div class="buttons">
-                        <button class="approve-btn">Approve</button>
-                        <button class="decline-btn">Decline</button>
-                    </div>
-                </div>
-            </div>
-            <!-- More request cards can be added here -->
+            {% endfor %}
         </div>
     </div>
-    
+
+    <script>
+        $(document).ready(function () {
+            $('.approve-btn, .decline-btn').click(function () {
+                const requestCard = $(this).closest('.request-card');
+                const requestId = requestCard.data('id');
+                const requestType = requestCard.data('type');
+                const action = $(this).data('action');
+
+                // Send an AJAX request to update the request status
+                $.ajax({
+                    url: "{% url 'admin_portal:update_request_status' %}",
+                    type: "POST",
+                    data: {
+                        csrfmiddlewaretoken: "{{ csrf_token }}",
+                        id: requestId,
+                        type: requestType,
+                        status: action,
+                    },
+                    success: function (response) {
+                        alert(`Request status updated to ${action}`);
+                        requestCard.fadeOut(); // Optional: Remove the card after action
+                    },
+                    error: function () {
+                        alert("Failed to update request status. Try again.");
+                    },
+                });
+            });
+        });
+    </script>
 </body>
 </html>
+ {% endcomment %}
+
+ <!DOCTYPE html>
+ {% load static %}
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Request Approvals</title>
+     <link rel="stylesheet" href="{% static 'css/approve_request.css' %}">
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ </head>
+ <body>
+     <div class="scrollable-container">
+         <header>
+             <h1>Request Approval Dashboard</h1>
+         </header>
+ 
+         {% csrf_token %}
+         <div class="request-list">
+             <!-- NOC Requests -->
+             {% for request in noc_requests %}
+             <div class="request-card" data-id="{{ request.id }}" data-type="noc">
+                 <div class="card-header">
+                     <h3>NOC Request</h3>
+                     <p><strong>Student Name:</strong> {{ request.student_name }}</p>
+                     <p><strong>Roll Number:</strong> {{ request.roll_no }}</p>
+                     <p><strong>Email:</strong> {{ request.email }}</p>
+                     <p><strong>Description:</strong> {{ request.request_description }}</p>
+                     <a href="{{ request.google_drive_link }}" class="view-pdf" target="_blank">View Attached Document</a>
+                 </div>
+                 <div class="card-actions">
+                     <textarea placeholder="Enter your approval message here..."></textarea>
+                     <div class="buttons">
+                         <button class="approve-btn" data-action="Approved">Approve</button>
+                         <button class="decline-btn" data-action="Declined">Decline</button>
+                     </div>
+                 </div>
+             </div>
+             {% endfor %}
+ 
+             <!-- No Due Slips -->
+             {% for slip in no_due_slips %}
+             <div class="request-card" data-id="{{ slip.id }}" data-type="no_due">
+                 <div class="card-header">
+                     <h3>No Due Slip</h3>
+                     <p><strong>Student Name:</strong> {{ slip.student_name }}</p>
+                     <p><strong>Roll Number:</strong> {{ slip.roll_no }}</p>
+                     <p><strong>Email:</strong> {{ slip.email }}</p>
+                     <p><strong>Hostel:</strong> {{ slip.hostel }}</p>
+                     <p><strong>Room Number:</strong> {{ slip.room_no }}</p>
+                 </div>
+                 <div class="card-actions">
+                     <textarea placeholder="Enter your approval message here..."></textarea>
+                     <div class="buttons">
+                         <button class="approve-btn" data-action="Approved">Approve</button>
+                         <button class="decline-btn" data-action="Declined">Decline</button>
+                     </div>
+                 </div>
+             </div>
+             {% endfor %}
+ 
+             <!-- LOR Requests -->
+             {% for request in lor_requests %}
+             <div class="request-card" data-id="{{ request.id }}" data-type="lor">
+                 <div class="card-header">
+                     <h3>LOR Request</h3>
+                     <p><strong>Student Name:</strong> {{ request.student_name }}</p>
+                     <p><strong>Roll Number:</strong> {{ request.roll_no }}</p>
+                     <p><strong>Email:</strong> {{ request.email }}</p>
+                     <p><strong>Description:</strong> {{ request.request_description }}</p>
+                     <a href="{{ request.google_drive_link }}" class="view-pdf" target="_blank">View Attached Document</a>
+                 </div>
+                 <div class="card-actions">
+                     <textarea placeholder="Enter your approval message here..."></textarea>
+                     <div class="buttons">
+                         <button class="approve-btn" data-action="Approved">Approve</button>
+                         <button class="decline-btn" data-action="Declined">Decline</button>
+                     </div>
+                 </div>
+             </div>
+             {% endfor %}
+         </div>
+     </div>
+ 
+     <script>
+         $(document).ready(function () {
+             $('.approve-btn, .decline-btn').click(function () {
+                 const requestCard = $(this).closest('.request-card');
+                 const requestId = requestCard.data('id');
+                 const requestType = requestCard.data('type');
+                 const action = $(this).data('action');
+ 
+                 // Send an AJAX request to update the request status
+                 $.ajax({
+                     url: "{% url 'admin_portal:update_request_status' %}",
+                     type: "POST",
+                     data: {
+                         csrfmiddlewaretoken: "{{ csrf_token }}",
+                         id: requestId,
+                         type: requestType,
+                         status: action,
+                     },
+                     success: function (response) {
+                         alert(`Request status updated to ${action}`);
+                         requestCard.fadeOut(); // Optional: Remove the card after action
+                     },
+                     error: function () {
+                         alert("Failed to update request status. Try again.");
+                     },
+                 });
+             });
+         });
+     </script>
+ </body>
+ </html>
+ 

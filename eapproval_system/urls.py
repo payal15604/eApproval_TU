@@ -22,6 +22,6 @@ from django.shortcuts import redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
-    path('', lambda request: redirect('users:signup')), 
-    #path('requests/', include('requests.urls')),
+    path('', lambda request: redirect('admin_portal:landingpage')), #yaha change kara users:signup ko
+    path('admin_portal/', include('admin_portal.urls'))
 ]

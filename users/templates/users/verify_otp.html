@@ -1,12 +1,12 @@
-<!-- users/templates/users/verify_otp.html -->
-<!-- {% load static %} -->
+{% comment %} <!-- users/templates/users/verify_otp.html -->
+{% load static %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTP Verification</title>
-    <link rel="stylesheet" href="./verify_otp.css">
+    <link rel="stylesheet" href="{% static 'css/verify_otp.css' %}">
 </head>
 <body>
     <div class="overlay"></div>
@@ -14,10 +14,161 @@
         <h2>Two-Factor Authentication</h2>
         <p>We've sent a one-time passcode to your email. Please enter it below to continue.</p>
         <form method="POST">
-            <!-- {% csrf_token %} -->
+            {% csrf_token %} 
             <input type="text" name="otp" placeholder="Enter OTP" required><br>
             <button type="submit">Verify OTP</button>
+            <a href="{% url 'users:login' %}">Sign Up</a>
         </form>
     </div>
 </body>
+</html> {% endcomment %}
+
+{% comment %} <!-- users/templates/users/verify_otp.html -->
+{% load static %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <link rel="stylesheet" href="{% static 'css/verify_otp.css' %}">
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <h2>Two-Factor Authentication</h2>
+        <p>We've sent a one-time passcode to your email. Please enter it below to continue.</p>
+        <form method="POST">
+            {% csrf_token %} 
+            <input type="text" name="otp" placeholder="Enter OTP" required><br>
+            <button type="submit">Verify OTP</button>
+        </form>
+        <div class="extra-links">
+            <a href="{% url 'users:login' %}">Sign Up</a>  <!-- Corrected URL name and link text -->
+        </div>
+    </div>
+</body>
+</html> {% endcomment %}
+
+{% load static %} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <link rel="stylesheet" href="{% static 'css/verify_otp.css' %}">
+    <style>
+        /* Style for the popup modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 8px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Success and Error message styles */
+        .success {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .error {
+            background-color: #f44336;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <h2>Two-Factor Authentication</h2>
+        <p>We've sent a one-time passcode to your email. Please enter it below to continue.</p>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="otp" placeholder="Enter OTP" required><br>
+            <button type="submit">Verify OTP</button>
+        </form>
+        <div class="extra-links">
+            <a href="{% url 'users:login' %}">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- Modal for success/error messages -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="messageText"></p>
+        </div>
+    </div>
+
+    {% if messages %}
+    <script>
+        // Display the popup modal with the message
+        window.onload = function() {
+            var modal = document.getElementById('messageModal');
+            var span = document.getElementsByClassName('close')[0];
+            var messageText = document.getElementById('messageText');
+
+            {% for message in messages %}
+                messageText.innerHTML = "{{ message }}";
+                // Apply class based on message level
+                if ("{{ message.tags }}" === "success") {
+                    messageText.className = "success";
+                } else if ("{{ message.tags }}" === "error") {
+                    messageText.className = "error";
+                }
+                modal.style.display = "block";
+            {% endfor %}
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+    </script>
+    {% endif %}
+</body>
 </html>
+

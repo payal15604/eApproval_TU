@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 
+
 app_name = 'admin_portal'
 
 urlpatterns = [
@@ -14,7 +15,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     # path('reset_password/', views.reset_password, name='reset_password'), 
     path('dashboard/approve_request/', views.approve_request, name='approve_request'),
-    # path('dashboard/no_due_slip/', views.no_due_slip, name='no_due_slip'),
+    path('update-status/', views.update_request_status, name='update_request_status')
     # path('dashboard/lor_request/', views.lor_request, name='lor_request'),
     # path('dashboard/submit/', views.success_page, name='success_page')
 ]

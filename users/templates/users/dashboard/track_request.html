@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% comment %} <!DOCTYPE html>
 {%load static%}
 <html lang="en">
 <head>
@@ -57,6 +57,76 @@
                         <td>2024-11-15</td>
                         <td class="status rejected">Rejected</td>
                     </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html> {% endcomment %}
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Tracking</title>
+    <link rel="stylesheet" href="{% static 'css/track_request.css' %}">
+</head>
+<body>
+    <div class="tracking-container">
+        <header>
+            <h1>Request Tracking System</h1>
+            <p>Track the status of your requests: NOC, No Due Slip, LOR, and more!</p>
+        </header>
+        
+        <div class="controls">
+            <input type="text" placeholder="Search by request ID or name..." class="search-bar">
+            <select class="filter">
+                <option value="all">All Requests</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+            </select>
+        </div>
+        
+        <div class="request-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Roll Number</th>
+                        <th>Student Name</th>
+                        <th>Request Type</th>
+                        <th>Request Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in noc_requests %}
+                    <tr>
+                        <td>{{ request.roll_no }}</td>
+                        <td>{{ request.student_name }}</td>
+                        <td>NOC</td>
+                        <td class="status {{ request.request_status|lower }}">{{ request.request_status }}</td>
+                    </tr>
+                    {% endfor %}
+
+                    {% for slip in no_due_slips %}
+                    <tr>
+                        <td>{{ slip.roll_no }}</td>
+                        <td>{{ slip.student_name }}</td>
+                        <td>No Due Slip</td>
+                        <td class="status {{ slip.request_status|lower }}">{{ slip.request_status }}</td>
+                    </tr>
+                    {% endfor %}
+
+                    {% for request in lor_requests %}
+                    <tr>
+                        <td>{{ request.roll_no }}</td>
+                        <td>{{ request.student_name }}</td>
+                        <td>LOR</td>
+                        <td class="status {{ request.request_status|lower }}">{{ request.request_status }}</td>
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

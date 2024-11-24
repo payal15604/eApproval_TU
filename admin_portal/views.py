@@ -7,6 +7,10 @@ from django.urls import reverse
 import random
 import string
 from .models import AdminProfile
+from users.models import NOCRequest, NoDueSlip, LORRequest
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -171,3 +175,45 @@ def reset_password(request):
             return redirect('admin_portal:forgot_password')
 
     return render(request, 'admin_portal/reset_password.html')
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+def approve_request(request):
+    logger.info("Fetching NOC requests")
+    noc_requests = NOCRequest.objects.all()
+    no_due_slips = NoDueSlip.objects.all()
+    lor_requests = LORRequest.objects.all()
+    logger.info(f"NOC Requests: {noc_requests}")
+    
+    return render(request, 'admin_portal/dashboard/approve_request.html', {'noc_requests': noc_requests, 'no_due_slips': no_due_slips,'lor_requests': lor_requests})
+
+@csrf_exempt
+def update_request_status(request):
+    if request.method == 'POST':
+        request_id = request.POST.get('id')
+        request_type = request.POST.get('type')
+        status = request.POST.get('status')
+
+        # Determine the model based on the type
+        model_mapping = {
+            'noc': NOCRequest,
+            'no_due': NoDueSlip,
+            'lor': LORRequest,
+        }
+
+        if request_type in model_mapping:
+            model = model_mapping[request_type]
+            try:
+                # Update the request_status
+                obj = model.objects.get(id=request_id)
+                obj.request_status = status
+                obj.save()
+                return JsonResponse({"message": "Request status updated successfully!"})
+            except model.DoesNotExist:
+                return JsonResponse({"error": "Request not found!"}, status=404)
+        else:
+            return JsonResponse({"error": "Invalid request type!"}, status=400)
+
+    return JsonResponse({"error": "Invalid request method!"}, status=405)
